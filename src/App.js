@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
+import "./App.css";
+import Login from "./Screens/Login";
+import Registration from "./Screens/Registration";
+import Home from "./Screens/Home";
+import store from "./store";
+import PrivateRoute from "./Component/privateRoute";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/registration" component={Registration} />
+            <PrivateRoute exact path="/home" component={Home} />
+          </Switch>
+        </Router>
+        <ToastContainer />
+      </Provider>
     </div>
   );
-}
+};
 
 export default App;
