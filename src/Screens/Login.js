@@ -39,13 +39,13 @@ const Login = () => {
           toast("You have Successfully Logged in to your world 🌎");
           history.push("/home");
         } else {
-          toast.error("Username or Password are Incorrect 😡");
+          toast.error("Invalid credentials. Please try again. 😡");
         }
       } else {
-        toast.error("Username or Password are Incorrect 😔");
+        toast.error("Invalid credentials. Please try again. 😔");
       }
     } else {
-      toast.error("Username or Password are Incorrect 😔");
+      toast.error("Invalid credentials. Please try again. 😔");
     }
   };
 

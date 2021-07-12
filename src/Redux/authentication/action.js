@@ -1,4 +1,4 @@
-import { ADD_USER_INFO } from "./authenticationType";
+import { ADD_USER_INFO } from "../authentication/type";
 
 export const addUserInfo = (userInfo) => {
   return {

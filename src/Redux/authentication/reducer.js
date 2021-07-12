@@ -1,4 +1,4 @@
-import { ADD_USER_INFO } from "./authenticationType";
+import { ADD_USER_INFO } from "../authentication/type";
 
 const initialState = JSON.parse(localStorage.getItem("userInfo")) || [];
 

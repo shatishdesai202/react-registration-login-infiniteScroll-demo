@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import { Field, Formik } from "formik";
@@ -8,9 +8,12 @@ import {
   Button,
   DialogActions,
   FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserInfo } from "../Redux/authenticationAction";
+import { addUserInfo } from "../Redux/authentication/action";
 import { toast } from "react-toastify";
 
 const Registration = () => {
@@ -24,7 +27,7 @@ const Registration = () => {
     history.push("/home");
   }
 
-  const initialValues = {
+  const [initialValues, setInitialValues] = useState({
     name: "",
     email: "",
     password: "",
@@ -32,7 +35,7 @@ const Registration = () => {
     phoneNumber: "",
     gender: "",
     hobby: [],
-  };
+  });
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
@@ -40,9 +43,11 @@ const Registration = () => {
     password: Yup.string().required("Required"),
     address: Yup.string().required("Required"),
     phoneNumber: Yup.string().required("Required"),
+    gender: Yup.string().required("Required"),
   });
 
   const onSubmit = (values) => {
+    console.log("values", values);
     const { email } = values;
     let isUserExist = false;
 
@@ -74,7 +79,6 @@ const Registration = () => {
             touched,
             errors,
             dirty,
-            isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
@@ -147,34 +151,88 @@ const Registration = () => {
                   margin="normal"
                 />
 
-                <div role="group" aria-labelledby="my-radio-group">
-                  <label className="m-2">
-                    <Field
-                      type="radio"
-                      name="gender"
-                      value="male"
-                      className="ml-2"
-                    />
-                    Male
-                  </label>
-                  <label className="m-2">
-                    <Field type="radio" name="gender" value="female" />
-                    Female
-                  </label>
-                </div>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender"
+                  value={values.gender}
+                  onChange={handleChange}
+                  error={errors.gender && touched.gender}
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio required={true} />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio required={true} />}
+                    label="Male"
+                  />
+                </RadioGroup>
 
+                {/* <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={values.hobby.includes("reading")}
+                      onChange={handleCheckboxChanges}
+                      name="reading"
+                    />
+                  }
+                  label="I 💓 Reading"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={values.hobby.includes("swimming")}
+                      onChange={handleCheckboxChanges}
+                      name="swimming"
+                    />
+                  }
+                  label="I like swimming 🏊‍♂️"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={values.hobby.includes("coding")}
+                      onChange={handleCheckboxChanges}
+                      name="coding"
+                    />
+                  }
+                  label="I ❤️‍🔥 👨‍💻"
+                /> */}
                 <div role="group" aria-labelledby="checkbox-group">
-                  <div className="mr-2">
-                    <Field type="checkbox" name="hobby" value="chess" />
-                    Chess
+                  <div className="form-check">
+                    <label>
+                      <Field
+                        className="form-check-input"
+                        type="checkbox"
+                        name="hobby"
+                        value="reading"
+                      />
+                      I 💓 📖
+                    </label>
                   </div>
-                  <div className="ml-2">
-                    <Field type="checkbox" name="hobby" value="reading" />
-                    Reading
+                  <div className="form-check">
+                    <label>
+                      <Field
+                        className="form-check-input"
+                        type="checkbox"
+                        name="hobby"
+                        value="swimimng"
+                      />
+                      I 💓 🏊‍♂️
+                    </label>
                   </div>
-                  <div className="ml-2">
-                    <Field type="checkbox" name="hobby" value="swimming" />
-                    Swimming
+                  <div className="form-check">
+                    <label>
+                      <Field
+                        className="form-check-input"
+                        type="checkbox"
+                        name="hobby"
+                        value="coding"
+                      />
+                      I 💓 👨‍💻
+                    </label>
                   </div>
                 </div>
 
@@ -183,7 +241,7 @@ const Registration = () => {
                     type="button"
                     className="outline"
                     onClick={handleReset}
-                    disabled={!dirty || isSubmitting}
+                    disabled={!dirty}
                   >
                     Reset
                   </Button>

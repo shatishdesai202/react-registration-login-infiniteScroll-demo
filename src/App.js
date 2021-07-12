@@ -11,6 +11,8 @@ import Home from "./Screens/Home";
 import store from "./store";
 import PrivateRoute from "./Component/privateRoute";
 
+// https://gateway.marvel.com/v1/public/comics?limit=${increment}&offset=${number}&ts=1&hash=866ddc8bf8343c53f45a710a0deb34c0&apikey=8b0c1cf5084a6b18d0034b1096ece30d
+
 const App = () => {
   return (
     <div>
