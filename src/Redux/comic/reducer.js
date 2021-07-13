@@ -5,22 +5,23 @@ import {
 } from "./type";
 
 const comicReducer = (
-  state = { comic: [], isLoading: false, error: false },
+  comicData = { comic: [], isLoading: false, error: false, isApiCall: true },
   action
 ) => {
   switch (action.type) {
     case COMICS_REQUEST_PENDING:
-      return { ...state, isLoading: true };
+      return { ...comicData, isLoading: true };
     case COMICS_REQUEST_SUCCESS:
       return {
-        ...state,
+        ...comicData,
         isLoading: false,
-        comic: [...state.comic, action.comic],
+        comic: [...comicData.comic, ...action.comics],
       };
     case COMICS_REQUEST_FAILURE:
-      return { ...state, error: action.error };
+      console.log("COMICS_REQUEST_FAILURE");
+      return { ...comicData, error: action.error };
     default:
-      return state;
+      return comicData;
   }
 };
 
